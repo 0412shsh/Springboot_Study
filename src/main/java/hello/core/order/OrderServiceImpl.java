@@ -1,18 +1,21 @@
 package hello.core.order;
 
+
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
+
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();  //DAO에서 회원정보를 찾아야 해서 필요
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy(); // 고정 할인 정책이 필요함
+    private final MemberRepository memberRepository;  //DAO에서 회원정보를 찾아야 해서 필요
 
+    private final DiscountPolicy discountPolicy;
 
-
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
